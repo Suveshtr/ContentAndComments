@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { fetchPosts } from '../../actions'
+import { PostsList } from './List-Posts'
+
 class Posts extends React.Component {
 
     componentDidMount() {
@@ -18,18 +20,9 @@ class Posts extends React.Component {
 
     render() {
         const { posts, isPostFetching } = this.props
-
-        console.log("PostProps", this.props)
         return(
             <div className="posts">
-              <ol className="posts-list">
-                
-                  { posts.map((post) => 
-                        <li key={post.id}>
-                            {post.title}
-                        </li>
-                   )}
-              </ol>
+              <PostsList posts={posts}/>
             </div>
         )
     }
@@ -37,9 +30,6 @@ class Posts extends React.Component {
 
 const mapStateToProps = (state, {match}) => {
     const { posts, isPostFetching } = state.allPosts
-    
-    console.log("posts:", state.allPosts)
-    console.log("SelectedCategoryPath", match.params )
     return {
         posts,
         isPostFetching,
