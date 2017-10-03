@@ -1,48 +1,54 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Category from '../Category'
-//import { fetchCategories } from '../../actions'
 
+import { Navbar, Nav } from 'react-bootstrap'
 
 class Header extends React.Component {
+  render() {
 
-    
-       
-    render() {
+    const { categories } = this.props
 
-        const { categories } = this.props
-        console.log("categories", categories)
-        return (
-            <div>
-            <div className="categories">
-                
-                    <div className="categories-list">
-                        Show:
-                        {Object.keys(categories).map(key => {
-                            const category  = categories[key]
-                            return <Category
-                                key={category.name}
-                                category={category.name}
-                                path={category.path}                                
-                            />
-                        })}
-                    </div>
-                
-            </div>
-            
-            </div>
-           
-        )
-    }
+    return (
+
+      <div className="categories">
+
+        <Navbar inverse collapseOnSelect>
+          <Navbar.Header>
+            <Navbar.Brand>
+              Show:
+            </Navbar.Brand>
+          </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav>
+              {Object.keys(categories).map(key => {
+                const category = categories[key]
+                return <Category
+                  key={category.name}
+                  category={category.name}
+                  path={category.path}
+                />
+              })}
+
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+
+      </div>
+
+
+
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
 
-    const categories = {...state.categories}
+  const categories = { ...state.categories }
 
-    return {
-       categories    
-    }
+  return {
+    categories
+  }
 }
 
 export default connect(mapStateToProps)(Header)

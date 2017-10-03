@@ -1,21 +1,20 @@
 import React from 'react'
-import { NavLink, withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import { NavItem } from 'react-bootstrap'
 
 class Category extends React.Component {
-    render() {
-        const { category, path } = this.props
+  render() {
+    const { category, path } = this.props
 
-        return (
-            <div className="category">
-                <NavLink activeClassName="activeLink" to={`/${category}/posts`} >
-                    {path}
-                </NavLink>
-            </div>
-        )
-    }
+    return (
+      <NavItem>
+        <Link to={`/${category}/posts`} >
+          {path}
+        </Link>
+      </NavItem>
+    )
+  }
 }
-
-
 
 export default Category
 
