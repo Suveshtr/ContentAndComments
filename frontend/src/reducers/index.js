@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
 import {
-  SELECT_CATEGORY, REQUEST_CATEGORIES,RECEIVE_CATEGORIES,
-  REQUEST_POSTS, RECEIVE_POSTS
+  REQUEST_ALL, RECEIVE_ALL,
+  SELECT_CATEGORY, REQUEST_CATEGORIES,RECEIVE_CATEGORIES,ADD_CATEGORY,
+  REQUEST_POSTS, RECEIVE_POSTS, SET_POSTS,SET_COMMENTS, SET_POSTIDS
 } from '../actions'
 
 // const selectedCategory = (state = 'all', action) => {
@@ -13,51 +14,110 @@ import {
 //   }
 // }
 
+const posts = (state = {}, action) => {
 
-
-const availableCategories = (state = {isCategoriesFetching:false, categories: []} , action) => {
     switch (action.type) {
-        case REQUEST_CATEGORIES:
+        
+        case SET_POSTS:
+            return {
+                ...state,                
+                ...action.posts                
+            }
+        default:
+            return state
+    }
+}
+
+const postIds = (state={}, action) => {
+    switch (action.type) {
+        
+        case SET_POSTIDS:
             return {
                 ...state,
-                isCategoriesFetching: true
+                [action.category]: action.postIds
             }
+        default:
+            return state
+    }
+}
+
+const comments = (state = {}, action) => {
+    switch (action.type) {
+        
+        case SET_COMMENTS:
+            return {
+                ...state,                
+                ...action.comments                
+            }
+        default:
+            return state
+    }
+}
+
+
+
+const categories = (state = [] , action) => {
+    switch (action.type) {
+        
         case RECEIVE_CATEGORIES:
             return {
+                ...state,                
+                ...action.categories
+            }
+        case ADD_CATEGORY:
+            return {                
+                [action.category.name]: {...action.category},
                 ...state,
-                isCategoriesFetching: false,
-                categories: action.categories
             }
         default:
             return state
     }
 }
 
-
-const allPosts = (state = { isPostFetching: false, posts: [] }, action) => {
+const categoryIds = (state=[], action) => {
     switch (action.type) {
-        case REQUEST_POSTS:
-            return {
-                ...state,
-                isPostFetching: true
-            }
-        case RECEIVE_POSTS:
-            return {
-                ...state,
-                isPostFetching: false,
-                posts: action.posts
-            }
+        
+        case RECEIVE_CATEGORIES:
+            return [
+                ...state,                                
+                ...action.categoryIds
+            ]
+        case ADD_CATEGORY:
+            return [
+                action.category.name,
+                ...state,                
+            ]
         default:
             return state
     }
 }
+
+
+// const allPosts = (state = { isPostFetching: false, posts: [] }, action) => {
+//     switch (action.type) {
+//         case REQUEST_POSTS:
+//             return {
+//                 ...state,
+//                 isPostFetching: true
+//             }
+//         case RECEIVE_POSTS:
+//             return {
+//                 ...state,
+//                 isPostFetching: false,
+//                 posts: action.posts
+//             }
+//         default:
+//             return state
+//     }
+// }
 
 
 const rootReducer = combineReducers({
-  //selectedCategory,
-  availableCategories,
-  allPosts
+  posts,
+  postIds,
+  comments,
+  categories,
+  categoryIds
 })
 
 export default rootReducer
-

@@ -10,34 +10,100 @@ const headers = {
   'Authorization': token
 }
 
-export const getAllPosts = () => 
+export const getAllPosts = () =>
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
 
 
-const getPosts = (criteria) => 
-    fetch(`${api}/${criteria}/posts`, { headers })
+const getPostsByCriteria = (criteria) =>
+  fetch(`${api}/${criteria}/posts`, { headers })
     .then(res => res.json())
 
-export const getPostDetail = (postId) => 
-    fetch(`${api}/posts/${postId}`, { headers })
+export const getPostDetail = (postId) =>
+  fetch(`${api}/posts/${postId}`, { headers })
     .then(res => res.json())
 
 
-export const getPostsByCategory = (category) => 
-  category === 'all' ? getAllPosts() : getPosts(category)
+export const getPosts = (category='all') =>
+  category === 'all' ? getAllPosts() : getPostsByCriteria(category)
 
 
 
-export const getPostsByComments = (comment) => 
-  getPosts(comment)
+export const getPostsByComments = (comment) =>
+  getPostsByCriteria(comment)
 
 
-export const getAllComments = () =>
-  fetch(`${api}/comments`, { headers })
+export const getComments = (postId) =>
+  fetch(`${api}/posts/${postId}/comments`, { headers })
     .then(res => res.json())
-    
+
 export const getAllCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())
     .then(data => data.categories)
+
+const getCategory = (post, categories) => {
+  return categories.filter(({ name }) => post.category === name)
+}
+
+const createNestedResposes = (posts, comments) => {
+    
+    
+    return posts.reduce((result, post) => {
+      return result.concat({
+        ...post,
+        "comments": comments.filter(comment => comment.parentId === post.id) || [],
+        //category: this.getCategory(post, categories)
+      })
+    }, [])
+  }
+
+
+export const getPostAndComments = (category='all') => {
+  
+  let response = {
+    posts: [],
+    comments: [],
+    nestedPosts: []
+  }
+
+  return getPosts(category)
+      .then(posts => {  
+          response.posts = posts
+          let postPromises = posts.map(post => {
+            return getComments(post.id)
+              .then(comments => {
+                
+                  response.comments.push(...comments)
+                  return comments
+              })
+          })
+          
+          return Promise.all(postPromises)
+            .then(result => {                
+                response.nestedPosts = createNestedResposes(response.posts, response.comments)               
+                return response.nestedPosts
+            })
+      })
+
+}
+// export const getAll = () => {
+
+ 
+
+      
+//             /* category: getCategory(post, categories)*/
+//             // getAllCategories()
+//             //   .then(categories => {
+//             //       let result = []
+//             //       console.log("post", post)
+//             //       result.concat({
+//             //       ...post,
+//             //       "comments": comments.filter(comment => comment.parentId === post.id) || [],
+//             //       category: getCategory(post, categories)
+//             //     })
+//             console.log("result", result)
+//           })
+//       })
+//     })
+// }

@@ -3,8 +3,10 @@ import { Route, Switch } from 'react-router-dom'
 import Posts from '../Posts'
 
 class Main extends React.Component {
-    render() {
 
+    
+    render() {
+        console.log("Main called", this.props.hasPostFetched)
         return (
             <div>
                 <Switch>
