@@ -15,6 +15,8 @@ export const SET_POSTIDS = 'SET_POSTIDS'
 export const SET_COMMENTS = 'SET_COMMENTS'
 export const SET_CATEGORIES = 'SET_CATEGORIES'
 export const ADD_CATEGORY = 'ADD_CATEGORY'
+export const INCREMENT_VOTE= 'INCREMENT_VOTE'
+export const DECREMENT_VOTE = 'DECREMENT_VOTE'
 
 
 
@@ -71,6 +73,18 @@ export const normalizeCategories = (categories) => dispatch => {
     
     
 }
+
+export const incrementVote = postId => ({
+    type: INCREMENT_VOTE,
+    postId
+})
+
+export const decrementVote = postId => ({
+    type: DECREMENT_VOTE,
+    postId
+})
+
+
 
 export const requestPosts = () => ({
     type: REQUEST_POSTS,
