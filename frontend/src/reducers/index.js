@@ -2,17 +2,32 @@ import { combineReducers } from 'redux'
 import {
   REQUEST_ALL, RECEIVE_ALL,
   SELECT_CATEGORY, REQUEST_CATEGORIES,RECEIVE_CATEGORIES,ADD_CATEGORY,
-  REQUEST_POSTS, RECEIVE_POSTS, SET_POSTS,SET_COMMENTS, SET_POSTIDS
+  REQUEST_POSTS, RECEIVE_POSTS, SET_POSTS,SET_COMMENTS, SET_POSTIDS, INCREMENT_VOTE,
+  DECREMENT_VOTE
 } from '../actions'
 
-// const selectedCategory = (state = 'all', action) => {
-//   switch (action.type) {
-//     case SELECT_CATEGORY:
-//       return action.category
-//     default:
-//       return state
-//   }
-// }
+
+const updateVotingScore = (state, action) => {
+    
+    let score = Number(state.voteScore)
+    
+    switch (action.type) {
+        
+        case INCREMENT_VOTE:
+            console.log("updateVotingScore_state", state)
+            return {
+                ...state,
+                voteScore: score+1
+            }
+        case DECREMENT_VOTE:
+            return {
+                ...state,
+                voteScore: score-1
+            }
+        default:
+            return state
+    }
+}
 
 const posts = (state = {}, action) => {
 
@@ -22,6 +37,12 @@ const posts = (state = {}, action) => {
             return {
                 ...state,                
                 ...action.posts                
+            }
+        case INCREMENT_VOTE:
+        case DECREMENT_VOTE:
+            return {
+                ...state,
+                [action.postId]: updateVotingScore({...state[action.postId]}, action)
             }
         default:
             return state
@@ -91,26 +112,6 @@ const categoryIds = (state=[], action) => {
             return state
     }
 }
-
-
-// const allPosts = (state = { isPostFetching: false, posts: [] }, action) => {
-//     switch (action.type) {
-//         case REQUEST_POSTS:
-//             return {
-//                 ...state,
-//                 isPostFetching: true
-//             }
-//         case RECEIVE_POSTS:
-//             return {
-//                 ...state,
-//                 isPostFetching: false,
-//                 posts: action.posts
-//             }
-//         default:
-//             return state
-//     }
-// }
-
 
 const rootReducer = combineReducers({
   posts,
