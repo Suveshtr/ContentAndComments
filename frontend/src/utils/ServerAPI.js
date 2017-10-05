@@ -87,23 +87,13 @@ export const getPostAndComments = (category='all') => {
       })
 
 }
-// export const getAll = () => {
-
- 
-
-      
-//             /* category: getCategory(post, categories)*/
-//             // getAllCategories()
-//             //   .then(categories => {
-//             //       let result = []
-//             //       console.log("post", post)
-//             //       result.concat({
-//             //       ...post,
-//             //       "comments": comments.filter(comment => comment.parentId === post.id) || [],
-//             //       category: getCategory(post, categories)
-//             //     })
-//             console.log("result", result)
-//           })
-//       })
-//     })
-// }
+export const updateVotingScore = (postId, option) =>
+  fetch(`${api}/posts/${postId}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ option })
+  }).then(res => res.json())
+    
