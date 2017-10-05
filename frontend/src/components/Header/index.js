@@ -4,6 +4,7 @@ import Category from '../Category'
 
 import { Navbar, Nav } from 'react-bootstrap'
 
+
 class Header extends React.Component {
   render() {
 
@@ -21,13 +22,14 @@ class Header extends React.Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              {Object.keys(categories).map(key => {
+              {Object.keys(categories).map((key) => {
                 const category = categories[key]
                 return <Category
-                  key={category.name}
+                  key={key}            
                   category={category.name}
-                  path={category.path}
+                  path={category.path}                  
                 />
+                
               })}
 
             </Nav>
@@ -35,20 +37,17 @@ class Header extends React.Component {
         </Navbar>
 
       </div>
-
-
-
     )
   }
 }
 
 const mapStateToProps = (state) => {
 
-  const categories = { ...state.categories }
+  const categories = state.categories
 
   return {
     categories
   }
 }
-
-export default connect(mapStateToProps)(Header)
+//required to pass pure:false since the rect-router-bootstrap would not set the active links correctly in the NavItem
+export default connect(mapStateToProps, null, null, { pure: false})(Header)

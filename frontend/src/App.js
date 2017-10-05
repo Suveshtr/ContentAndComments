@@ -56,7 +56,6 @@ class App extends Component {
 
     const { hasCategoryFetched, hasPostFetched } = this.state
       
-
     return (
       
      <div className="container">

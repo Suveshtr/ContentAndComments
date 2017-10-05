@@ -21,12 +21,16 @@ class Posts extends React.Component {
         }
     }
 
+   
+
     render() {
-        const { posts, postIds, selectedCategory } = this.props
-        
+        const { posts, postIds, comments, selectedCategory } = this.props
+        console.log("posts", posts)
         return (
             <div className="posts">
-                {(postIds[selectedCategory]) && <PostsList posts={posts} postIds={postIds[selectedCategory]} />}
+                {(postIds[selectedCategory]) && 
+                    <PostsList posts={posts} comments={comments}  postIds={postIds[selectedCategory]}              
+                />}
             </div>
         )
     }
@@ -35,16 +39,15 @@ class Posts extends React.Component {
 
 const mapStateToProps = (state, { match }) => {
 
-    const { posts, postIds } = state
-
-    console.log("POST_mapStateToProps_state", state )
+    const { posts, postIds, comments } = state
+    
     const selectedCategory = match.params.category || 'all'
-    console.log("selected category", selectedCategory) 
     
     return {
         posts,
-        postIds,
-        selectedCategory: selectedCategory
+        postIds,     
+        comments,
+        selectedCategory
     }
 }
 
