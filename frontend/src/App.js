@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import Header from './components/Header'
 import Main from './components/Main'
-
 import { normalizeNestedResponse,normalizeCategories, addCategory } from './actions'
 import * as ServerAPI from './utils/ServerAPI'
 import './App.css';
@@ -15,7 +14,6 @@ class App extends Component {
     hasCategoryFetched: false
   }
   
-
   componentDidMount() {
 
     const {dispatch} = this.props
@@ -32,9 +30,7 @@ class App extends Component {
     ServerAPI.getAllCategories()
       .then(categories => {
         this.setState({
-          //categories: categories,
-          hasCategoryFetched: true
-         
+          hasCategoryFetched: true      
         })
 
          dispatch(normalizeCategories(categories))
@@ -43,7 +39,6 @@ class App extends Component {
     
   }
 
-  
   render() {
 
     const { hasCategoryFetched, hasPostFetched } = this.state
@@ -62,12 +57,4 @@ class App extends Component {
   }
 }
 
-
-const mapStateToProps = (state) => {
-
-  return {
-    
-  }
-}
-
-export default withRouter(connect(mapStateToProps)(App))
+export default withRouter(connect()(App))
