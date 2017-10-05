@@ -43,14 +43,6 @@ class App extends Component {
     
   }
 
-  componentWillReceiveProps(nextProps) {
-       
-        
-             console.log("PP_ComponentWillUpdate called")
-            
-    }
-
-
   
   render() {
 
