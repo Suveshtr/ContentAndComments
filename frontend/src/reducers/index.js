@@ -29,14 +29,21 @@ const updateVotingScore = (state, action) => {
     }
 }
 
-const posts = (state = {}, action) => {
+const posts = (state = {isPostFetching: true}, action) => {
 
     switch (action.type) {
+
+        case REQUEST_POSTS:
+            return {
+                ...state,
+                isPostFetching: true
+            }
         
         case SET_POSTS:
             return {
                 ...state,                
-                ...action.posts                
+                ...action.posts,
+                isPostFetching: false               
             }
         case INCREMENT_VOTE:
         case DECREMENT_VOTE:
