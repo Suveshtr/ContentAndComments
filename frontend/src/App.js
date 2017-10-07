@@ -41,20 +41,30 @@ class App extends Component {
 
   render() {
 
-    const { hasCategoryFetched, hasPostFetched } = this.state
-      
+    const { hasCategoryFetched } = this.state
+    const { isPostFetching } = this.props
+    console.log("isPostFetching", isPostFetching)
     return (
       
      <div className="container">
         {hasCategoryFetched && <div>
           <Header />
         </div>}
-         {hasPostFetched  && <div>
-          <Main hasPostFetched={hasPostFetched}/>
+         {(isPostFetching === false) && <div>
+          <Main hasPostFetched={isPostFetching === false}/>
         </div>}
       </div>
     )
   }
 }
 
-export default withRouter(connect()(App))
+const mapStateToProps = (state) => {
+
+    const { isPostFetching } = state.posts
+    console.log("isPostFetching", isPostFetching)
+    return {
+        isPostFetching
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(App))
