@@ -2,23 +2,35 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Category from '../Category'
 
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, MenuItem } from 'react-bootstrap'
 
 
 class Header extends React.Component {
+  
+  state ={
+    selectedItem: 'Timestamp'
+  }
+  
+  handleSortBy = (selectedItem) => {
+    
+    this.setState({
+      selectedItem: selectedItem
+    })
+  }
   render() {
 
     const { categories } = this.props
-
+    const { selectedItem } = this.state
+    console.log("selectedItem render", selectedItem)
     return (
 
       <div className="categories">
 
         <Navbar inverse collapseOnSelect>
           <Navbar.Header>
-            <Navbar.Brand>
+            <Navbar.Text style={{color:'white'}}>
               Show:
-            </Navbar.Brand>
+            </Navbar.Text>
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
@@ -33,6 +45,18 @@ class Header extends React.Component {
               })}
 
             </Nav>
+
+            <Nav pullRight style={{paddingRight: '10px'}}>
+              <Navbar.Text style={{color:'white'}}>
+                SortedBy:
+              </Navbar.Text>
+              <NavDropdown title={selectedItem} id="nav-dropdown" onSelect={this.handleSortBy}>
+                <MenuItem eventKey="Timestamp">Timestamp</MenuItem>
+                <MenuItem eventKey="Votes">Votes</MenuItem>          
+              </NavDropdown>
+              
+            </Nav>
+
           </Navbar.Collapse>
         </Navbar>
 
