@@ -1,54 +1,51 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { fetchPosts, setPostIdsByCategory } from '../../actions'
-import PostsList from './List-Posts'
+import sortBy from 'sort-by'
+import PostsList from './PostsList'
+
 
 class Posts extends React.Component {
 
-    //When the url changes, the selecteCategory will change because of match.params.category will get updated by url change
-    componentWillReceiveProps(nextProps) {
-        
-        if (nextProps.selectedCategory !== this.props.selectedCategory) {
-            const { dispatch, posts, postIds, selectedCategory } = nextProps
-            console.log("PostsComponentWillUpdate called")
-            if(!nextProps.postIds[selectedCategory]) {
-                let filteredPostIds = postIds['all'].filter(id => posts[id].category === selectedCategory)
-                console.log("PostsComponentWillUpdate dispatch setPostIdsByCategory", filteredPostIds)
-                dispatch(setPostIdsByCategory(filteredPostIds, selectedCategory))
-            }
-
-        }
-    }
-
-   
-
-    render() {
-        const { posts, postIds, comments, selectedCategory } = this.props
-        console.log("posts", posts)
-        return (
-            <div className="posts">
-                {(postIds[selectedCategory]) && 
-                    <PostsList posts={posts} comments={comments}  postIds={postIds[selectedCategory]}              
-                />}
-            </div>
-        )
-    }
+  render() {    
+    const { posts, comments, selectedCategory } = this.props
+    return (
+      <div className="posts">
+        <PostsList posts={posts} comments={comments} selectedCategory={selectedCategory}
+        />
+      </div>
+    )
+  }
 }
 
+
+const getFilteredPost = (posts, postIds, selectedCategory) => {
+
+  let filteredPostByCategory = postIds.reduce((result, id) => {
+    if (((selectedCategory === 'all') || (posts[id].category === selectedCategory) ) &&
+      !posts[id].deleted)
+      result.push(posts[id])
+    
+    return result
+  }, [])
+  
+  return filteredPostByCategory
+}
 
 const mapStateToProps = (state, { match }) => {
+  
+  const { posts, postIds, comments } = state
+  const sortByOption = state.postSortBy
+  const selectedCategory = match.params.category
 
-    const { posts, postIds, comments } = state
-    
-    const selectedCategory = match.params.category || 'all'
-    
-    return {
-        posts,
-        postIds,     
-        comments,
-        selectedCategory
-    }
+  let filteredPostByCategory = getFilteredPost(posts, postIds, selectedCategory)
+
+  return {
+    posts: filteredPostByCategory.sort(sortBy(sortByOption)),
+    postIds,
+    comments,
+    selectedCategory
+  }
 }
 
-export default withRouter(connect(mapStateToProps)(Posts))
+export default withRouter(connect(mapStateToProps, null, null, { pure: false })(Posts))

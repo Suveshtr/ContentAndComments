@@ -19,9 +19,7 @@ const getPostsByCriteria = (criteria) =>
   fetch(`${api}/${criteria}/posts`, { headers })
     .then(res => res.json())
 
-export const getPostDetail = (postId) =>
-  fetch(`${api}/posts/${postId}`, { headers })
-    .then(res => res.json())
+
 
 
 export const getPosts = (category='all') =>
@@ -42,9 +40,6 @@ export const getAllCategories = () =>
     .then(res => res.json())
     .then(data => data.categories)
 
-const getCategory = (post, categories) => {
-  return categories.filter(({ name }) => post.category === name)
-}
 
 const createNestedResposes = (posts, comments) => {
     
@@ -87,8 +82,8 @@ export const getPostAndComments = (category='all') => {
       })
 
 }
-export const updateVotingScore = (postId, option) =>
-  fetch(`${api}/posts/${postId}`, {
+export const updateVotingScore = (entityId, entity, option) =>
+  fetch(`${api}/${entity}/${entityId}`, {
     method: 'POST',
     headers: {
       ...headers,
@@ -97,3 +92,71 @@ export const updateVotingScore = (postId, option) =>
     body: JSON.stringify({ option })
   }).then(res => res.json())
     
+export const addPost = (post) => 
+  fetch(`${api}/posts`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ id: post.id, 
+                           timestamp: post.timestamp, 
+                           title:post.title, 
+                           body: post.body, 
+                           author: post.author, 
+                           category: post.category })
+  }).then(res => res.json())
+    .then(post => {return {...post, comments:[]}})
+
+export const updatePost = (post) => 
+  fetch(`${api}/posts/${post.id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ title:post.title, body: post.body })
+  }).then(res => res.json())
+
+export const deletePost = id => 
+  fetch(`${api}/posts/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
+
+export const addComment = (comment) => 
+  fetch(`${api}/comments`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ id: comment.id, 
+                           timestamp: comment.timestamp,                            
+                           body: comment.body, 
+                           author: comment.author, 
+                           parentId: comment.parentId })
+  }).then(res => res.json())
+    .then( comment => comment)
+
+export const updateComment = (comment) => 
+  fetch(`${api}/comments/${comment.id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ title:comment.timestamp, body: comment.body })
+  }).then(res => res.json())
+
+export const deleteComment = id => 
+  fetch(`${api}/comments/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
