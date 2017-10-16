@@ -2,7 +2,7 @@
 
 This is a content and comment web app using React Redux. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
 
-This repository includes the code for the backend API Server tp interact with the front-end portion of the project.
+This repository includes the code for the backend API Server to interact with the front-end portion of the project.
 
 ## Installing and Starting
 
