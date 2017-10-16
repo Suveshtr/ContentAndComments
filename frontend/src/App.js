@@ -1,57 +1,53 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Main from './components/Main'
-import { normalizeNestedResponse,normalizeCategories, addCategory } from './actions'
+import rootHandler from './components/Main/rootHandler'
+import { normalizeNestedResponse, 
+  normalizeCategories } from './actions'
 import * as ServerAPI from './utils/ServerAPI'
 import './App.css';
 
 class App extends Component {
 
-  state = {
-    hasPostFetched: false,
-    hasCategoryFetched: false
-  }
-  
   componentDidMount() {
 
-    const {dispatch} = this.props
-    
-    ServerAPI.getPostAndComments()
-      .then(posts => {
-        this.setState({
-           //posts: result,
-           hasPostFetched: true
-        })
-        dispatch(normalizeNestedResponse(posts))
-      })
-      
+    const { dispatch } = this.props
+
     ServerAPI.getAllCategories()
       .then(categories => {
+        
+        categories = [{ name: 'all', path: 'all' }, ...categories]
         this.setState({
-          hasCategoryFetched: true      
+          categories: categories
         })
-
-         dispatch(normalizeCategories(categories))
-         dispatch(addCategory({name: 'all', path: 'all'}))
+        dispatch(normalizeCategories(categories))
+        
+      }).then(res => {        
+        ServerAPI.getPostAndComments()
+          .then(posts => {            
+            dispatch(normalizeNestedResponse(posts))
+          })
       })
-    
+
   }
 
   render() {
 
-    const { hasCategoryFetched } = this.state
-    const { isPostFetching } = this.props
-    console.log("isPostFetching", isPostFetching)
+    
+    const { isFetching } = this.props
+
     return (
-      
-     <div className="container">
-        {hasCategoryFetched && <div>
-          <Header />
-        </div>}
-         {(isPostFetching === false) && <div>
-          <Main hasPostFetched={isPostFetching === false}/>
+
+      <div className="container">
+
+        <Header />
+        
+        <Route exact path="/" component={rootHandler} />
+        
+        {(isFetching === false) && <div>
+          <Main hasPostFetched={isFetching === false} />
         </div>}
       </div>
     )
@@ -59,12 +55,13 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-
-    const { isPostFetching } = state.posts
-    console.log("isPostFetching", isPostFetching)
-    return {
-        isPostFetching
-    }
+  //console.log("match", match)
+  const { posts, postIds, comments, categories} = state
+  const isFetching  = (posts.isPostFetching || !postIds.length || comments.isCommentFetching || categories.isCategoryFetching)
+  
+  return {
+    isFetching
+  }
 }
 
 export default withRouter(connect(mapStateToProps)(App))
