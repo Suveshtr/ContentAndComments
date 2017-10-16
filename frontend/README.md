@@ -1,4 +1,4 @@
-# Readable API Server
+# Readable APP
 
 This is a content and comment app using React Redux. Users will be able to post contents to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
 
