@@ -44,3 +44,7 @@ export const comments = (state = {isCommentFetching: true}, action) => {
 export const getComment = (state, commentId) => {
     return state.comments[commentId]
 }
+
+export const getComments = state => {
+    return state.comments.filter(comment => !comment.deleted)
+}

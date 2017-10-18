@@ -40,16 +40,8 @@ class PostsList extends React.Component {
           </tbody>
         </Table>
       </div>
-
-
     )
   }
 }
 
-const mapStateTpProps = (state, {match}) => {
-  return {
-    match
-  }
-}
-
-export default withRouter(connect(mapStateTpProps)(PostsList))
+export default withRouter(connect()(PostsList))

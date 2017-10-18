@@ -3,15 +3,15 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import sortBy from 'sort-by'
 import PostsList from './PostsList'
-
+import { getPostByCategory } from '../../reducers/posts.reducer'
 
 class Posts extends React.Component {
 
   render() {    
-    const { posts, comments, selectedCategory } = this.props
+    const { posts } = this.props
     return (
       <div className="posts">
-        <PostsList posts={posts} comments={comments} selectedCategory={selectedCategory}
+        <PostsList posts={posts}
         />
       </div>
     )
@@ -19,32 +19,14 @@ class Posts extends React.Component {
 }
 
 
-const getFilteredPost = (posts, postIds, selectedCategory) => {
-
-  let filteredPostByCategory = postIds.reduce((result, id) => {
-    if (((selectedCategory === 'all') || (posts[id].category === selectedCategory) ) &&
-      !posts[id].deleted)
-      result.push(posts[id])
-    
-    return result
-  }, [])
-  
-  return filteredPostByCategory
-}
-
 const mapStateToProps = (state, { match }) => {
   
-  const { posts, postIds, comments } = state
-  const sortByOption = state.postSortBy
-  const selectedCategory = match.params.category
+  const {  postIds, comments, sortByOption } = state
 
-  let filteredPostByCategory = getFilteredPost(posts, postIds, selectedCategory)
+  let filteredPostByCategory = getPostByCategory(state, match.params.category)
 
   return {
     posts: filteredPostByCategory.sort(sortBy(sortByOption)),
-    postIds,
-    comments,
-    selectedCategory
   }
 }
 

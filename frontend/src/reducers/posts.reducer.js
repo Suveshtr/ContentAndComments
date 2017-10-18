@@ -10,6 +10,8 @@ import {
 
 import { ADD_COMMENT } from '../actions/comments.types'
 import { updateVotingScore } from './updateVotingScore.reducer'
+import { getPostIds } from './postIds.reducer'
+import { getComment } from './comments.reducer'
 
 export const posts = (state = { isPostFetching: true }, action) => {
 
@@ -60,4 +62,31 @@ export const posts = (state = { isPostFetching: true }, action) => {
         default:
             return state
     }
+}
+
+
+export const getPostByCategory = (state, selectedCategory) => {
+
+  return getPostIds(state).reduce((result, id) => {
+    if (((selectedCategory === 'all') || (state.posts[id].category === selectedCategory) ) &&
+      !state.posts[id].deleted)
+      result.push(state.posts[id])
+    
+    return result
+  }, [])
+
+}
+
+export const getCommentsForPost = (state, id) => {
+    
+    const comments = getPost(state,id).comments.map( commentId => {
+        return getComment(state, commentId)
+
+    })
+
+    return comments.filter(comment => !comments.deleted)
+}
+
+export const getPost = (state, id) => {
+    return state.posts[id]
 }

@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import VoteScore from '../common//VoteScore'
 import Post from './Post'
 import Comments from '../Comments/Comments'
+import { getCommentsForPost, getPost } from '../../reducers/posts.reducer'
 
 class PostDetail extends React.Component {
 
@@ -35,14 +36,10 @@ class PostDetail extends React.Component {
 }
 
 const mapStateToProps = (state, { match }) => {
-  const { posts, comments } = state
-  const id  = match.params.id
- 
-  const filteredComments = posts[id].comments.map( commentId => comments[commentId])
   
   return {
-    post: posts[id],
-    comments: filteredComments.filter(comment => !comment.deleted )
+    post: getPost(state, match.params.id),
+    comments: getCommentsForPost(state, match.params.id)
   }
 }
 

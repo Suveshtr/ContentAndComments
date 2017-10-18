@@ -12,3 +12,7 @@ export const postIds = (state=[], action) => {
             return state
     }
 }
+
+export const getPostIds = state => {
+    return state.postIds
+}
