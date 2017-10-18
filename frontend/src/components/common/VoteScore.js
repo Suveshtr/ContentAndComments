@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { incrementPostVote, 
-         decrementPostVote,
-        incrementCommentVote,
-        decrementCommentVote } from '../../actions'
+         decrementPostVote } from '../../actions/posts.actions'
+import { incrementCommentVote, 
+         decrementCommentVote } from '../../actions/comments.actions'
 import * as ServerAPI from '../../utils/ServerAPI'
 
 class VoteScore extends React.Component {

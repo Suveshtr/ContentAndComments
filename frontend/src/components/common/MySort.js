@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { setCommentSortBy, setPostSortBy } from '../../actions'
+import { setCommentSortBy } from '../../actions/comments.actions'
+import { setPostSortBy } from '../../actions/posts.actions'
 
 class MySort extends React.Component {
   state = {

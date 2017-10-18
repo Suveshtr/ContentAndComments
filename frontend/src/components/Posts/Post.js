@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import momemt from 'moment'
 import { Link, withRouter } from 'react-router-dom'
 import DeletePost from './DeletePost'
-import { hidePostDelete } from '../../actions'
+import { hidePostDelete } from '../../actions//posts.actions'
 
 class Post extends React.Component {
 

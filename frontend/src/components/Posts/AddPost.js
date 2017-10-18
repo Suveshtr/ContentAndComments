@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom'
 import uuid from 'uuid'
 import moment from 'moment'
 import PostForm from './PostForm'
-import { addNewPost } from '../../actions'
+import { addNewPost } from '../../actions/posts.actions'
 
 
 class AddPost extends React.Component {

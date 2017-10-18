@@ -7,7 +7,7 @@ import sortBy from 'sort-by'
 import VoteScore from '../common/VoteScore'
 import MySort from '../common/MySort'
 import DeleteComment from './DeleteComment'
-import { hideCommentDelete } from '../../actions'
+import { hideCommentDelete } from '../../actions/comments.actions'
 
 class Comments extends React.Component {
 

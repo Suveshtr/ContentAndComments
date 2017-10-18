@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import CommentForm from './CommentForm'
-import { EditCommentRequest } from '../../actions'
+import { EditCommentRequest } from '../../actions/comments.actions'
 class EditComment extends React.Component {
   
   onSubmit = (comment) => {

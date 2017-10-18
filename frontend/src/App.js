@@ -4,8 +4,8 @@ import { withRouter, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Main from './components/Main'
 import rootHandler from './components/Main/rootHandler'
-import { normalizeNestedResponse, 
-  normalizeCategories } from './actions'
+import { normalizeNestedResponse } from './actions/common'
+import { normalizeCategories } from './actions/categories.actions'
 import * as ServerAPI from './utils/ServerAPI'
 import './App.css';
 

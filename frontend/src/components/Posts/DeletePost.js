@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Modal, Button } from 'react-bootstrap'
-import { hidePostDelete, deletePostRequest } from '../../actions'
+import { hidePostDelete, deletePostRequest } from '../../actions/posts.actions'
 
 class DeletePost extends React.Component {
 

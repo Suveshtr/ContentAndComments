@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom'
 import uuid from 'uuid'
 import moment from 'moment'
 import CommentForm from './CommentForm'
-import { addNewComment } from '../../actions'
+import { addNewComment } from '../../actions/comments.actions'
 
 
 class AddComment extends React.Component {

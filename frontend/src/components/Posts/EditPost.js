@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import PostForm from './PostForm'
-import { EditPostRequest } from '../../actions'
+import { EditPostRequest } from '../../actions//posts.actions'
 class EditPost extends React.Component {
   
   onSubmit = (post) => {
