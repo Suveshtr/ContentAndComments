@@ -3,11 +3,12 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import CommentForm from './CommentForm'
 import { EditCommentRequest } from '../../actions/comments.actions'
+import { getComment } from '../../reducers/comments.reducer'
 class EditComment extends React.Component {
   
   onSubmit = (comment) => {
-    const { dispatch, history, match } = this.props
-    dispatch(EditCommentRequest(comment))
+    const { history, match } = this.props
+    EditCommentRequest(comment)
     history.push(`/${match.params.category}/posts/${match.params.postId}`)
   }
 
@@ -23,10 +24,10 @@ class EditComment extends React.Component {
   }
 }
 
-const mapStateToProps = (state, {match, history}) => {
-  const { comments } = state
+const mapStateToProps = (state, {match}) => {
+  
   return {
-    comment: comments[match.params.commentId]
+    comment: getComment(state, match.params.commentId)
   }
 }
-export default withRouter(connect(mapStateToProps)(EditComment))
+export default withRouter(connect(mapStateToProps, { EditCommentRequest })(EditComment))
