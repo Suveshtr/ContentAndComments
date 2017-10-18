@@ -40,3 +40,7 @@ export const comments = (state = {isCommentFetching: true}, action) => {
             return state
     }
 }
+
+export const getComment = (state, commentId) => {
+    return state.comments[commentId]
+}
