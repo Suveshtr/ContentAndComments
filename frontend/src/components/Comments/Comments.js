@@ -18,8 +18,9 @@ class Comments extends React.Component {
   }
 
   handleDeleteComment = (event) => {
+    const { hideCommentDelete } = this.props
     event.preventDefault()
-    this.props.dispatch(hideCommentDelete(false))
+    hideCommentDelete(false)
     this.setState({
       id: event.target.dataset.id,
       parentId: event.target.dataset.parentid,
@@ -68,11 +69,10 @@ class Comments extends React.Component {
     )
   }
 }
-const mapStateToProps = (state) => {
-  
+const mapStateToProps = ({commentSortBy}) => {
   return {
-    commentSortBy: state.commentSortBy
+    commentSortBy
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Comments))
+export default withRouter(connect(mapStateToProps, {hideCommentDelete} )(Comments))

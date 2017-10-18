@@ -1,21 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { Modal, Button } from 'react-bootstrap'
 import { hideCommentDelete, deleteCommentRequest } from '../../actions/comments.actions'
-
 
 class DeleteComment extends React.Component {
 
   modalDeleteHide = (event) => {
-    this.props.dispatch(hideCommentDelete(true))
+    const { hideCommentDelete } = this.props
+    hideCommentDelete(true)
   }
 
   modalDelete = event => {
-    const { dispatch, id, parentId, match, history } = this.props
-    dispatch(deleteCommentRequest(id))
-    dispatch(hideCommentDelete(true))
-    history.push(`/${match.params.category}/posts/${parentId}`)
+    const { hideCommentDelete, deleteCommentRequest, id } = this.props
+    deleteCommentRequest(id)
+    hideCommentDelete(true)    
   }
 
   render() {
@@ -37,13 +35,11 @@ class DeleteComment extends React.Component {
   }
 }
 
-const mapStateToProps = (state, {match,history}) => {
-  const { hideDeleteComment } = state
+const mapStateToProps = ({ hideDeleteComment }) => {
+  
   return {
-    hideDeleteComment,
-    match,
-    history
+    hideDeleteComment    
   }
 }
 
-export default withRouter(connect(mapStateToProps)(DeleteComment))
+export default connect(mapStateToProps, { hideCommentDelete, deleteCommentRequest })(DeleteComment)

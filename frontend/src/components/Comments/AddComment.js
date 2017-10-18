@@ -6,39 +6,32 @@ import moment from 'moment'
 import CommentForm from './CommentForm'
 import { addNewComment } from '../../actions/comments.actions'
 
-
 class AddComment extends React.Component {
 
   onSubmit = comment => {    
-    const { dispatch, history, category } = this.props
-    dispatch(addNewComment(comment))
-    history.push(`/${category}/posts/${comment.parentId}`)
+    const { history, match, addNewComment } = this.props
+    addNewComment(comment)
+    history.push(`/${match.params.category}/posts/${comment.parentId}`)
   }
 
   render() {
-    const { category, comment} = this.props
-    return(
-      <div>
-        <h3>Add Comment</h3>
-        <Link className="close-create-entity" to={`/${category}/posts/${comment.parentId}`} >Close</Link>
-        <CommentForm comment={comment} onSubmit={this.onSubmit}/>
-      </div>
-      
-    ) 
-  }
-}
-const mapStateToProps = (state, {match, history}) => {
-  return {
-    history,
-    category: match.params.category,
-    comment : {
+    const { match } = this.props
+    const comment = {
       id: uuid.v4(),
       parentId: match.params.postId,
       timestamp: moment().valueOf(),
       body: '',
       author:''      
     }
+    return(
+      <div>
+        <h3>Add Comment</h3>
+        <Link className="close-create-entity" to={`/${match.params.category}/posts/${comment.parentId}`} >Close</Link>
+        <CommentForm comment={comment} onSubmit={this.onSubmit}/>
+      </div>
+      
+    ) 
   }
 }
 
-export default withRouter(connect(mapStateToProps)(AddComment))
+export default withRouter(connect(null, {addNewComment})(AddComment))
