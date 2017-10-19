@@ -2,14 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import momemt from 'moment'
 import { Link, withRouter } from 'react-router-dom'
-import DeletePost from './DeletePost'
+import { Button, Glyphicon } from 'react-bootstrap'
 import { hidePostDelete } from '../../actions//posts.actions'
 
-class Post extends React.Component {
 
+class Post extends React.Component {
+ 
   handleDeletePost = event => {
+    const { hidePostDelete } = this.props
     event.preventDefault()
-    this.props.dispatch(hidePostDelete(false))
+    hidePostDelete(false, event.target.dataset.id, event.target.dataset.author)
   }
 
   getNumberOfComments = post => {
@@ -27,9 +29,9 @@ class Post extends React.Component {
     const { post, showDetail, match } = this.props
     const date = momemt(post.timestamp).format("ll HH:mm:ss")
     const numberOfComments = this.getNumberOfComments(post)
-    console.log("number of comments", numberOfComments)
+    
     return (
-      <div>
+      <div>        
         {showDetail && <div>
           <p>{post.title}</p>
           <p>{post.body}</p>
@@ -45,9 +47,10 @@ class Post extends React.Component {
           <div className="summary">
             <Link to={`${match.url}/edit-post`}>Edit Post</Link>
             <span> | </span>
-            <a href="#" onClick={this.handleDeletePost}>Delete Post</a>
+            <a href="#" data-id={post.id} bsSize="xsmall" data-author={post.author} 
+                  onClick={this.handleDeletePost}>Delete Post</a>
           </div>
-          <DeletePost id={post.id} author={post.author}/>
+          
         </div>}
 
         {!showDetail &&
@@ -61,14 +64,28 @@ class Post extends React.Component {
                 } 
               </span>
             </p>
+            <div >
+              <Link to={`${match.url}/${post.id}/edit-post`}>
+                <Button bsSize="xsmall" style={{
+                  marginRight:'10px'
+                }}>
+                    Edit Post <Glyphicon glyph="edit" />
+                </Button>
+              </Link>
+              <Button data-id={post.id} bsSize="xsmall" data-author={post.author}
+                  onClick={this.handleDeletePost}>
+                  Delete Post <Glyphicon glyph="remove-circle" />
+              </Button>
+              
+            </div>
           </div>}
       </div>
     )
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = ({comments}) => {
   return {
-    comments: state.comments
+    comments
   }
 }
-export default withRouter(connect(mapStateToProps)(Post))
+export default withRouter(connect(mapStateToProps, { hidePostDelete })(Post))
