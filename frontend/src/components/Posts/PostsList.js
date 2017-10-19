@@ -6,6 +6,7 @@ import { Table } from 'react-bootstrap'
 import VoteScore from '../common/VoteScore'
 import Post from './Post'
 import MySort from '../common/MySort'
+import DeletePost from './DeletePost'
 
 class PostsList extends React.Component {
 
@@ -19,6 +20,8 @@ class PostsList extends React.Component {
         </div>
 
         {posts.length>0 && <MySort title="Posts" />}
+        
+        <DeletePost />
         
         <Table responsive>
           

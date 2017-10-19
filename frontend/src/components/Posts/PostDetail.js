@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import VoteScore from '../common//VoteScore'
 import Post from './Post'
+import DeletePost from './DeletePost'
 import Comments from '../Comments/Comments'
 import { getCommentsForPost, getPost } from '../../reducers/posts.reducer'
 
@@ -14,6 +15,7 @@ class PostDetail extends React.Component {
 
     return (
       <div>
+        <DeletePost />
         <Table responsive>
           <tbody>
             <tr>

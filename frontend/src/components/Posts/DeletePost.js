@@ -7,23 +7,24 @@ import { hidePostDelete, deletePostRequest } from '../../actions/posts.actions'
 class DeletePost extends React.Component {
 
   modalDeleteHide = (event) => {
-    this.props.dispatch(hidePostDelete(true))
+    const { hidePostDelete } = this.props
+    hidePostDelete(true)
   }
 
   modalDelete = event => {
-    const { dispatch, id, match, history } = this.props
-    dispatch(deletePostRequest(id))
-    dispatch(hidePostDelete(true))
+    const { hideDeletePostModal, deletePostRequest, hidePostDelete, match, history } = this.props
+    deletePostRequest(hideDeletePostModal.id)
+    hidePostDelete(true)
     history.push(`/${match.params.category}/posts`)
   }
 
   render() {
-    const { hideDeletePost, author } = this.props
+    const { hideDeletePostModal } = this.props
     return (
-      <Modal show={!hideDeletePost}>
+      <Modal show={!hideDeletePostModal.hide}>
         <Modal.Header>
           <Modal.Title>
-            <strong>{author}:</strong> &nbsp;
+            <strong>{hideDeletePostModal.author}:</strong> &nbsp;
             Are you sure you want to delete this post ?
           </Modal.Title>
         </Modal.Header>
@@ -36,13 +37,10 @@ class DeletePost extends React.Component {
   }
 }
 
-const mapStateToProps = (state, {match,history}) => {
-  const { hideDeletePost } = state
+const mapStateToProps = ({hideDeletePostModal}) => {
   return {
-    hideDeletePost,
-    match,
-    history
+    hideDeletePostModal, 
   }
 }
 
-export default withRouter(connect(mapStateToProps)(DeletePost))
+export default withRouter(connect(mapStateToProps, { hidePostDelete, deletePostRequest } )(DeletePost))
