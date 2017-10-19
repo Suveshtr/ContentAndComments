@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { posts } from './posts.reducer'
 import { postIds } from './postIds.reducer'
 import { postSortBy } from './postSortBy.reducer'
-import { hideDeletePost } from './hideDeletePost.reducer'
+import { hideDeletePostModal } from './hideDeletePostModal.reducer'
 
 import { comments } from './comments.reducer'
 import { categories, categoryIds } from './categories.reducer'
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   categoryIds,
   postSortBy,
   commentSortBy,
-  hideDeletePost,
+  hideDeletePostModal,
   hideDeleteComment
 })
 
