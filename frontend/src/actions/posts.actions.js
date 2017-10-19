@@ -60,9 +60,11 @@ export const deletePostRequest = id => dispatch => {
 }
 
 //option: true or false
-export const hidePostDelete = (option) => ({
+export const hidePostDelete = (option, id='',author='') => ({
     type: PostTypes.HIDE_POST_DELTETE,
-    option
+    option,
+    id,
+    author
 })
 
 const deletePost = id => ({
