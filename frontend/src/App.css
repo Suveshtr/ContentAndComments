@@ -130,9 +130,6 @@
   display: block;
 }
 
-.create-entity-details {
-  margin-left: 20px;
-}
 
 
 .create-entity-details input {
@@ -141,8 +138,7 @@
   margin-bottom: 10px;
   font-size: inherit;
   background: transparent;
-  border: none;
-  border-bottom: 1px solid #ccc;
+  border: 1px solid #ccc;
   outline: 0;
 }
 
@@ -155,4 +151,10 @@
   font-size: inherit;
   border: none;
   outline: 0;
+}
+
+.create-entity-details input[disabled] {
+  cursor: not-allowed;
+  background-color: #eee;
+  opacity: 1;
 }
