@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import momemt from 'moment'
 import { Link, withRouter } from 'react-router-dom'
 import { Button, Glyphicon } from 'react-bootstrap'
+import Pluralize from 'react-pluralize'
 import { hidePostDelete } from '../../actions//posts.actions'
 
 
@@ -17,7 +18,7 @@ class Post extends React.Component {
   getNumberOfComments = post => {
     const {comments} = this.props
     return post.comments.reduce((result, commentId)=> {
-      if(comments[commentId].deleted === false) {
+      if(comments[commentId] && comments[commentId].deleted === false) {
         result = result + 1
       }
       return result
@@ -39,7 +40,7 @@ class Post extends React.Component {
           <p className="summary"> by {post.author} on {date}
             <span> | &nbsp;
                 {numberOfComments !== 0 ?
-                <span>{numberOfComments} comments</span>
+                <span><Pluralize singular="comment" count={numberOfComments} /></span>
                 : <span>no comments</span>
               } <span> | <Link to={`${match.url}/add-comment`}>Add Comment</Link> </span>
             </span>
@@ -47,7 +48,7 @@ class Post extends React.Component {
           <div className="summary">
             <Link to={`${match.url}/edit-post`}>Edit Post</Link>
             <span> | </span>
-            <a href="#" data-id={post.id} bsSize="xsmall" data-author={post.author} 
+            <a href="#" data-id={post.id} data-author={post.author} 
                   onClick={this.handleDeletePost}>Delete Post</a>
           </div>
           
@@ -59,7 +60,9 @@ class Post extends React.Component {
             <p className="summary"> by {post.author} on {date}
               <span> | &nbsp;
                 {numberOfComments !== 0 ?
-                  <Link to={`${match.url}/${post.id}`}>{numberOfComments} comments</Link>
+                  <Link to={`${match.url}/${post.id}`}>
+                    <Pluralize singular="comment" count={numberOfComments} />
+                  </Link>
                   : "no comments"
                 } 
               </span>
@@ -88,4 +91,4 @@ const mapStateToProps = ({comments}) => {
     comments
   }
 }
-export default withRouter(connect(mapStateToProps, { hidePostDelete })(Post))
+export default withRouter(connect(mapStateToProps, { hidePostDelete })(Post)) 

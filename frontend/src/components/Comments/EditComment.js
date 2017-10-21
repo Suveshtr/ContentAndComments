@@ -4,16 +4,22 @@ import { withRouter, Link } from 'react-router-dom'
 import CommentForm from './CommentForm'
 import { EditCommentRequest } from '../../actions/comments.actions'
 import { getComment } from '../../reducers/comments.reducer'
+import NotFound from '../common/NotFound'
+
 class EditComment extends React.Component {
   
   onSubmit = (comment) => {
-    const { history, match } = this.props
+    const { EditCommentRequest, history, match } = this.props
     EditCommentRequest(comment)
     history.push(`/${match.params.category}/posts/${match.params.postId}`)
   }
 
   render() {
     const { comment, match } = this.props
+
+    if (!comment)
+      return (<NotFound />)
+
     return(
       <div>        
         <h3>Edit Comment</h3>

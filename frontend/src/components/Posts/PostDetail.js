@@ -7,15 +7,20 @@ import Post from './Post'
 import DeletePost from './DeletePost'
 import Comments from '../Comments/Comments'
 import { getCommentsForPost, getPost } from '../../reducers/posts.reducer'
+import NotFound from '../common/NotFound'
 
 class PostDetail extends React.Component {
 
   render() {
     const { post, comments } = this.props
 
+    if (!post)
+      return <NotFound />
+
     return (
       <div>
         <DeletePost />
+        
         <Table responsive>
           <tbody>
             <tr>
