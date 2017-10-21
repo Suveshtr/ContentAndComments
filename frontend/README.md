@@ -21,7 +21,7 @@ Information about the API server and how to use it can be found in its [README f
 
 ## Usage
 
-The command npm start opens the browser and displays the main page containing all posts. The posts can be viewd by categories links as displayed on the header.
+The command `npm start` opens the browser and displays the main page containing all the posts. The posts can be viewed by categories links as displayed on the header.
 
 * How to add a post
     - on the main page, click on the `green circle icon` with + sign on it
@@ -62,3 +62,10 @@ The command npm start opens the browser and displays the main page containing al
     - navigate to post detail page and click on `Delet Comment` link on the comment that needs deletion
     - a confirmation pop up will be diaplayed to confirm the deletion or cancel the deletion
     - on clicking the `Yes` confirmation the comment shall be deleted and post detail page will be displayed without   the deleted comment
+
+* How to sort posts and/or comments
+  posts and comments can be sorted by the number of votes or by the date of creation of the posts/comments.
+    - The posts can be sorted by clicking on the `green circle icon` with a drop-down sign on the main page.
+    - the options to sort by date or votes can be selected as desired and the posts shall be displayed accordingly
+    - the comments can be sorted by navigating to post details page and this page will display the same sorting icon 
+      on the first comment on the right hand side of the page.
