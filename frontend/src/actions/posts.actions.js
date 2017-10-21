@@ -31,14 +31,14 @@ const addPost = post => ({
     post
 })
 
-export const addNewPost = post => dispatch => (
+export const addNewPost = post => dispatch => {
     
     ServerAPI.addPost(post)
         .then(post => {   
             dispatch(addPost(post))
             dispatch(setPostIds([post.id]))            
         })
-)
+}
 
 const editPost = (post) => ({
     type: PostTypes.EDIT_POST,
