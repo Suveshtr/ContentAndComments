@@ -4,7 +4,7 @@ import {
   DELETE_COMMENT
 } from '../actions/comments.types'
 
-import { updateVotingScore } from './updateVotingScore.reducer'
+import { UpdateVotingScore } from './UpdateVotingScore.reducer'
 
 export const comments = (state = {isCommentFetching: true}, action) => {
     switch (action.type) {
@@ -34,7 +34,7 @@ export const comments = (state = {isCommentFetching: true}, action) => {
         case DECREMENT_VOTE_COMMENT:
             return {
                 ...state,
-                [action.commentId]: updateVotingScore({...state[action.commentId]}, action)
+                [action.commentId]: UpdateVotingScore({...state[action.commentId]}, action)
             }
         default:
             return state

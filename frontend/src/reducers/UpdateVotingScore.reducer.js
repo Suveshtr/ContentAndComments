@@ -1,7 +1,7 @@
 import { INCREMENT_VOTE_COMMENT, DECREMENT_VOTE_COMMENT } from '../actions/comments.types'
 import { INCREMENT_VOTE_POST, DECREMENT_VOTE_POST } from '../actions/posts.types'
 
-export const updateVotingScore = (state, action) => {
+export const UpdateVotingScore = (state, action) => {
     
     let score = Number(state.voteScore)
     

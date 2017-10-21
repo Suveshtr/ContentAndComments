@@ -9,7 +9,7 @@ import {
 } from '../actions/posts.types'
 
 import { ADD_COMMENT } from '../actions/comments.types'
-import { updateVotingScore } from './updateVotingScore.reducer'
+import { UpdateVotingScore } from './UpdateVotingScore.reducer'
 import { getPostIds } from './postIds.reducer'
 import { getComment } from './comments.reducer'
 
@@ -57,7 +57,7 @@ export const posts = (state = { isPostFetching: true }, action) => {
         case DECREMENT_VOTE_POST:
             return {
                 ...state,
-                [action.postId]: updateVotingScore({ ...state[action.postId] }, action)
+                [action.postId]: UpdateVotingScore({ ...state[action.postId] }, action)
             }
         default:
             return state
