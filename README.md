@@ -18,3 +18,7 @@ This repository includes the code for the backend API Server to interact with th
 ## API Server
 
 Information about the API server and how to use it can be found in its [README file](api-server/README.md).
+
+## Front-end
+
+Information about the API server and how to use it can be found in its [README file](frontend/README.md).
