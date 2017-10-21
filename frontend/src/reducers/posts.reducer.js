@@ -79,14 +79,16 @@ export const getPostByCategory = (state, selectedCategory) => {
 
 export const getCommentsForPost = (state, id) => {
     
-    const comments = getPost(state,id).comments.map( commentId => {
-        return getComment(state, commentId)
+    if (!getPost(state,id))
+        return
+    const comments = getPost(state,id).comments.map( commentId => (
+        getComment(state, commentId)
 
-    })
+    ))
 
-    return comments.filter(comment => !comments.deleted)
+    return comments.filter(comment => comment.deleted === false)
 }
 
 export const getPost = (state, id) => {
-    return state.posts[id]
+    return state.posts[id] && state.posts[id].deleted === false ? state.posts[id] : null
 }
