@@ -64,7 +64,9 @@ The command `npm start` opens the browser and displays the main page containing 
     - on clicking the `Yes` confirmation the comment shall be deleted and post detail page will be displayed without   the deleted comment
 
 * How to sort posts and/or comments
+
   posts and comments can be sorted by the number of votes or by the date of creation of the posts/comments.
+
     - The posts can be sorted by clicking on the `green circle icon` with a drop-down sign on the main page.
     - the options to sort by date or votes can be selected as desired and the posts shall be displayed accordingly
     - the comments can be sorted by navigating to post details page and this page will display the same sorting icon 
