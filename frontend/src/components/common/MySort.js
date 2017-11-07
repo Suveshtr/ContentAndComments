@@ -14,7 +14,7 @@ class MySort extends React.Component {
     const { dispatch, title } = this.props
     title === 'Posts' ? dispatch(setPostSortBy(selectedItem)) : dispatch(setCommentSortBy(selectedItem))
     this.setState({
-      selectedItem: selectedItem
+      sortOption: selectedItem
     })
   }
 

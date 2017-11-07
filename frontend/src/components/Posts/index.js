@@ -21,12 +21,12 @@ class Posts extends React.Component {
 
 const mapStateToProps = (state, { match }) => {
   
-  const { sortByOption } = state
+  const { postSortBy } = state
 
   let filteredPostByCategory = getPostByCategory(state, match.params.category)
 
   return {
-    posts: filteredPostByCategory.sort(sortBy(sortByOption)),
+    posts: filteredPostByCategory.sort(sortBy(postSortBy)),
   }
 }
 
